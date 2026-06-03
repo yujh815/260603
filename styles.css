@@ -689,6 +689,38 @@ p {
   background: #f4f6f8;
 }
 
+.admin-lock {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 28px;
+  color: var(--white);
+  background: var(--navy);
+}
+
+.admin-lock section {
+  width: min(420px, 100%);
+  padding: 36px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+}
+
+.admin-lock .brand-mark {
+  display: inline-grid;
+  margin-bottom: 24px;
+}
+
+.admin-lock h1 {
+  margin-bottom: 12px;
+  font-size: 30px;
+}
+
+.admin-lock p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .admin-header {
   position: sticky;
   top: 0;

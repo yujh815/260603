@@ -5,7 +5,34 @@ const mobileRatio = document.querySelector("#mobileRatio");
 const visitRows = document.querySelector("#visitRows");
 const currentEnv = document.querySelector("#currentEnv");
 const dataSourceNote = document.querySelector("#dataSourceNote");
+const ADMIN_PASSWORD = "20260603";
 let currentRows = [];
+
+function requireAdminAuth() {
+  if (sessionStorage.getItem("medisAdminAuthed") === "true") return true;
+
+  const password = prompt("관리자 비밀번호를 입력하세요.");
+  if (password === ADMIN_PASSWORD) {
+    sessionStorage.setItem("medisAdminAuthed", "true");
+    return true;
+  }
+
+  document.body.innerHTML = `
+    <main class="admin-lock">
+      <section>
+        <span class="brand-mark">M</span>
+        <h1>관리자 인증이 필요합니다</h1>
+        <p>비밀번호가 일치하지 않아 관리자 페이지를 표시할 수 없습니다.</p>
+        <a class="btn btn-primary" href="index.html">랜딩페이지로 이동</a>
+      </section>
+    </main>
+  `;
+  return false;
+}
+
+if (!requireAdminAuth()) {
+  throw new Error("Admin authentication required");
+}
 
 function countBy(rows, key) {
   return rows.reduce((acc, row) => {
