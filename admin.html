@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 통계 · 메디스파크</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="analytics.js"></script>
+    <script defer src="admin.js"></script>
+  </head>
+  <body data-admin="true" class="admin-body">
+    <header class="admin-header">
+      <a class="brand" href="index.html" aria-label="랜딩페이지로 이동">
+        <span class="brand-mark">M</span>
+        <span>
+          <strong>MEDIS PARK</strong>
+          <small>Analytics</small>
+        </span>
+      </a>
+      <div class="admin-actions">
+        <button class="btn btn-ghost admin-refresh" type="button" id="refreshBtn">새로고침</button>
+        <button class="btn btn-primary" type="button" id="exportBtn">CSV 내보내기</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <section class="admin-hero">
+        <p class="eyebrow">Admin Dashboard</p>
+        <h1>접속 통계와 방문자 환경정보</h1>
+        <p>
+          지역은 브라우저 시간대와 언어 기반 추정값입니다. GitHub Pages 정적 버전은
+          현재 브라우저에 저장된 데이터만 표시합니다.
+        </p>
+      </section>
+
+      <section class="admin-cards" aria-label="핵심 통계">
+        <article>
+          <span>총 이벤트</span>
+          <strong id="totalVisits">0</strong>
+        </article>
+        <article>
+          <span>고유 방문자</span>
+          <strong id="uniqueVisitors">0</strong>
+        </article>
+        <article>
+          <span>오늘 이벤트</span>
+          <strong id="todayVisits">0</strong>
+        </article>
+        <article>
+          <span>모바일 비율</span>
+          <strong id="mobileRatio">0%</strong>
+        </article>
+      </section>
+
+      <section class="admin-grid">
+        <article class="admin-panel">
+          <div class="panel-head">
+            <h2>지역 추정</h2>
+            <small>시간대·언어 기반</small>
+          </div>
+          <div class="bar-list" id="regionStats"></div>
+        </article>
+        <article class="admin-panel">
+          <div class="panel-head">
+            <h2>기기</h2>
+            <small>Desktop / Mobile / Tablet</small>
+          </div>
+          <div class="bar-list" id="deviceStats"></div>
+        </article>
+        <article class="admin-panel">
+          <div class="panel-head">
+            <h2>브라우저</h2>
+            <small>접속 브라우저</small>
+          </div>
+          <div class="bar-list" id="browserStats"></div>
+        </article>
+        <article class="admin-panel">
+          <div class="panel-head">
+            <h2>이벤트</h2>
+            <small>페이지뷰·전화·상담</small>
+          </div>
+          <div class="bar-list" id="eventStats"></div>
+        </article>
+      </section>
+
+      <section class="admin-panel">
+        <div class="panel-head">
+          <h2>최근 접속 목록</h2>
+          <button class="text-button" type="button" id="clearBtn">데이터 초기화</button>
+        </div>
+        <div class="table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>시간</th>
+                <th>이벤트</th>
+                <th>지역</th>
+                <th>기기</th>
+                <th>브라우저</th>
+                <th>OS</th>
+                <th>화면</th>
+                <th>유입</th>
+              </tr>
+            </thead>
+            <tbody id="visitRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-panel">
+        <div class="panel-head">
+          <h2>현재 접속자 환경</h2>
+          <small>이 관리자 페이지를 보고 있는 브라우저 기준</small>
+        </div>
+        <dl class="env-list" id="currentEnv"></dl>
+      </section>
+    </main>
+  </body>
+</html>
