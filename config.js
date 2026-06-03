@@ -1,0 +1,1 @@
+window.MEDIS_REMOTE_ANALYTICS_URL = "";

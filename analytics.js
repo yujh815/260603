@@ -4,6 +4,10 @@
   const SESSION_KEY = "medisParkSessionId";
   const MAX_VISITS = 500;
 
+  function getRemoteUrl() {
+    return (window.MEDIS_REMOTE_ANALYTICS_URL || "").trim();
+  }
+
   function randomId(prefix) {
     const seed = Math.random().toString(36).slice(2, 10);
     return `${prefix}-${Date.now().toString(36)}-${seed}`;
@@ -77,6 +81,30 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(visits.slice(-MAX_VISITS)));
   }
 
+  function sendRemote(visit) {
+    const endpoint = getRemoteUrl();
+    if (!endpoint) return;
+
+    const body = new URLSearchParams();
+    body.set("payload", JSON.stringify(visit));
+
+    fetch(endpoint, {
+      method: "POST",
+      mode: "no-cors",
+      body,
+    }).catch(() => {});
+  }
+
+  async function getRemoteVisits() {
+    const endpoint = getRemoteUrl();
+    if (!endpoint) return [];
+
+    const response = await fetch(`${endpoint}?mode=list&t=${Date.now()}`);
+    if (!response.ok) throw new Error("원격 통계 데이터를 불러오지 못했습니다.");
+    const data = await response.json();
+    return Array.isArray(data) ? data : data.visits || [];
+  }
+
   function addRecord(type, detail) {
     const nav = navigator;
     const ua = nav.userAgent || "";
@@ -120,6 +148,7 @@
     const visits = getVisits();
     visits.push(visit);
     saveVisits(visits);
+    sendRemote(visit);
     return visit;
   }
 
@@ -151,6 +180,8 @@
   window.MedisAnalytics = {
     getVisits,
     addRecord,
+    getRemoteVisits,
+    hasRemote: () => Boolean(getRemoteUrl()),
     downloadCsv,
     clearVisits,
   };
