@@ -19,6 +19,8 @@ window.MEDIS_REMOTE_ANALYTICS_URL = "여기에_웹앱_URL";
 
 수정 후 GitHub에 다시 올리면 `admin.html`에서 모든 방문자 통계를 볼 수 있습니다.
 
+방문자 페이지는 `POST`로 데이터를 저장하고, 관리자 페이지는 `JSONP` 방식으로 목록을 조회합니다. 이 방식은 GitHub Pages처럼 서버가 없는 정적 사이트에서도 동작합니다.
+
 ## 수집되는 정보
 
 - 접속 시간

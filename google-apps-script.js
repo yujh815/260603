@@ -46,7 +46,7 @@ function doPost(event) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-function doGet() {
+function doGet(event) {
   const sheet = getSheet();
   const values = sheet.getDataRange().getValues();
   const headers = values.shift();
@@ -58,7 +58,16 @@ function doGet() {
     return item;
   });
 
+  const output = { visits };
+  const callback = event && event.parameter && event.parameter.callback;
+
+  if (callback) {
+    return ContentService
+      .createTextOutput(`${callback}(${JSON.stringify(output)});`)
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+
   return ContentService
-    .createTextOutput(JSON.stringify({ visits }))
+    .createTextOutput(JSON.stringify(output))
     .setMimeType(ContentService.MimeType.JSON);
 }

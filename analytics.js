@@ -95,14 +95,32 @@
     }).catch(() => {});
   }
 
-  async function getRemoteVisits() {
+  function getRemoteVisits() {
     const endpoint = getRemoteUrl();
-    if (!endpoint) return [];
+    if (!endpoint) return Promise.resolve([]);
 
-    const response = await fetch(`${endpoint}?mode=list&t=${Date.now()}`);
-    if (!response.ok) throw new Error("원격 통계 데이터를 불러오지 못했습니다.");
-    const data = await response.json();
-    return Array.isArray(data) ? data : data.visits || [];
+    return new Promise((resolve, reject) => {
+      const callbackName = `medisAnalyticsJsonp_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      const script = document.createElement("script");
+      const separator = endpoint.includes("?") ? "&" : "?";
+      const cleanup = () => {
+        delete window[callbackName];
+        script.remove();
+      };
+
+      window[callbackName] = (data) => {
+        cleanup();
+        resolve(Array.isArray(data) ? data : data.visits || []);
+      };
+
+      script.onerror = () => {
+        cleanup();
+        reject(new Error("원격 통계 데이터를 불러오지 못했습니다."));
+      };
+
+      script.src = `${endpoint}${separator}mode=list&callback=${encodeURIComponent(callbackName)}&t=${Date.now()}`;
+      document.head.appendChild(script);
+    });
   }
 
   function addRecord(type, detail) {
