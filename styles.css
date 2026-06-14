@@ -296,6 +296,10 @@ p {
   align-items: start;
 }
 
+.intro h2 {
+  font-size: clamp(28px, 3.5vw, 46px);
+}
+
 .section-heading {
   max-width: 760px;
   margin-bottom: 42px;
