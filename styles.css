@@ -667,6 +667,7 @@ p {
   display: block;
   margin-bottom: 12px;
   color: var(--white);
+  text-align: center;
 }
 
 .footer p {
@@ -677,13 +678,25 @@ p {
   line-height: 1.7;
 }
 
-.footer-links {
-  margin-top: 10px !important;
+.footer-company {
+  max-width: none !important;
+  text-align: center;
 }
 
-.footer-links a {
-  color: var(--gold);
-  font-weight: 800;
+.footer-notes {
+  display: grid;
+  gap: 4px;
+  max-width: 920px;
+  margin: 14px 0 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  line-height: 1.7;
+  list-style: none;
+}
+
+.footer-notes li::before {
+  content: "※ ";
 }
 
 .admin-body {
