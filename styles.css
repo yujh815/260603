@@ -313,8 +313,8 @@ p {
   min-height: 590px;
   overflow: hidden;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.18)),
-    url("braincity-location-bg.jpg") center/cover;
+    linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)),
+    url("location-map-bg.png") center/cover;
   border: 1px solid var(--line);
   border-radius: 8px;
   box-shadow: var(--shadow);
